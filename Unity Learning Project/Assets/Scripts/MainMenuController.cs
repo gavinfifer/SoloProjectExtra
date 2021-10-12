@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -18,11 +19,11 @@ public class MainMenuController : MonoBehaviour
 
     public void Load_SampleScene()
     {
-        Application.LoadLevel("SampleScene");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void Load_MainMenu()
     {
-        Application.LoadLevel("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 }
