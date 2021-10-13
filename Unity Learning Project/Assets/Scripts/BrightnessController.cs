@@ -6,18 +6,19 @@ using UnityEngine.UI;
 public class BrightnessController : MonoBehaviour
 {
     public Slider sliderInput;
-    public float alphaLevel = .5f;
+    public float alphaLevel;
     
     public void brightnessChange()
-    {
-        alphaLevel = sliderInput.value;
+    { 
+        alphaLevel = (1 - sliderInput.value);
         GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, alphaLevel);
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        alphaLevel = sliderInput.value;
+        alphaLevel = (1 - sliderInput.value);
         GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, alphaLevel);
     }
 
