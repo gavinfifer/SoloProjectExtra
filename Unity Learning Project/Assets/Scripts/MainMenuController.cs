@@ -26,4 +26,10 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void Load_SettingsMenu()
+    {
+        SceneManager.LoadScene("SettingsMenu");
+    }
 }
+
