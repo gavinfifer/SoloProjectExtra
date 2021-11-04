@@ -17,19 +17,14 @@ public class MainMenuController : MonoBehaviour
         
     }
 
-    public void Load_SampleScene()
+    public void Load_Scene(string InputScene)
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(InputScene);
     }
 
-    public void Load_MainMenu()
+    public void Quit_Game()
     {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    public void Load_SettingsMenu()
-    {
-        SceneManager.LoadScene("SettingsMenu");
+        Application.Quit();
     }
 }
 
