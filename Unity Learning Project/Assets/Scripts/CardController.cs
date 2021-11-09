@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Current Issues: 
-/// -The discard only works one time and then stops working (I think i am not removing anything from the list and only adding so once 
-///     the second card is discarded the third doesn't replace it as the new second card)
-/// -The discard has issues when it translates the ID it is supposed to discard to the actual card it discards from the list
+/// -I am incorrectly accessing the CardInHandList as it starts at 0 not 1. The code doesn't show an error about this but it is the cause of the discard issues.
+/// -The DiscardThisCard code is also trying to discard cards that don't exist
 /// </summary>
-
-
 
 public class CardController : MonoBehaviour
 {
     
-    public float MoveSpeed = 5;
+    public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
     public static List<CardController> CardInHandList = new List<CardController>();
-    public static int CardHandTotal = 0;
+    //CardHandTotal is 1 greater than the amount of cards actually in the player's hand
+    public static int CardHandTotal = 1;
     private int MyCardHandID;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         DrawCard();
         NewTargetPos("Player Hand");
+        Debug.Log("Card position in list on spawn: " + CardInHandList[0]);
+
     }
 
     // Update is called once per frame
@@ -33,9 +33,15 @@ public class CardController : MonoBehaviour
     {
         //is constantly moving this card toward the new position every frame
         Vector3 CurrentTargetPos = TargetPos;
-        if(transform.position != CurrentTargetPos)
+
+        if (transform.position != CurrentTargetPos)
         {
-            transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPos, Time.deltaTime * MoveSpeed);
+            float CurrentVelocity = MinimumMoveSpeed;
+
+            //scale the CurrentVelocity based on the distance to the target position
+            CurrentVelocity +=  (5 * (Vector3.Distance(CurrentTargetPos, transform.position)));
+
+            transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPos, Time.deltaTime * CurrentVelocity);
         }
     }
 
@@ -80,17 +86,20 @@ public class CardController : MonoBehaviour
     public void DiscardThisCard()
     {
         //go to discard pile, gameplay stuff yatta yatta
-        TargetPos = new Vector3(-1, 1, 0);
+        NewTargetPos("Discard Pile");
 
         //tell all cards in the player's hand to reset their ID in the hand and if that ID and sets this cards ID to 0
-        for (int CardToCall = 0; CardToCall < CardHandTotal; CardToCall++)
+        for (int CardToCall = 0; CardToCall < (CardHandTotal); CardToCall++)
         {
             CardInHandList[CardToCall].ResetCardHandID(MyCardHandID);
         }
-
         CardHandTotal--;
-
     }
+
+
+    /// <summary>
+    /// - I think ResetCardHandID is not working correctly and is not changing the actuall list at all
+    /// </summary>
 
     public void ResetCardHandID(int DiscardedCardHandID)
     {

@@ -26,15 +26,23 @@ public class CardCreate : MonoBehaviour
         NewCard.transform.position = StartPos;
     }
 
+    //Discards the card with the passed ID in hand
     public void DiscardCardbyID(int CardHandID)
     {
         //if the card ID passed in exists then it calls it's discard function
-        if(CardHandID < CardController.CardHandTotal)
+        if(CardHandID <= CardController.CardHandTotal)
         {
             CardController.CardInHandList[CardHandID].DiscardThisCard();
         }
+    }
 
-
+    //discards all the cards in the player's hand
+    public void DiscardAllCards()
+    {
+        for(int CardCounter = 0; CardCounter < CardController.CardHandTotal; CardCounter++)
+        {
+            DiscardCardbyID(CardCounter);
+        }
     }
 }
 
