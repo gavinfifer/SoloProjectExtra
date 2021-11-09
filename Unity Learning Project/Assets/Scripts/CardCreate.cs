@@ -28,20 +28,12 @@ public class CardCreate : MonoBehaviour
 
     public void DiscardCardbyID(int CardHandID)
     {
-        //---check through each card in the player's hand for the card with the given ID---
+        //if the card ID passed in exists then it calls it's discard function
+        if(CardHandID < CardController.CardHandTotal)
+        {
+            CardController.CardInHandList[CardHandID].DiscardThisCard();
+        }
 
-        //for(card to check = 0; card to check < number of cards in players hand; card to check ++)
-        //{
-        //      if(card to check has the same CardHandID as the passed in CardHandID)
-        //      {
-        //          call DiscardThisCard() on the card that matches the given CardHandID
-        //          exit this loop
-        //      }
-        //}
-
-
-
-        ////////use a dynamic array of all the cards in the player's hand instead of the card ID variable to find each card
 
     }
 }
