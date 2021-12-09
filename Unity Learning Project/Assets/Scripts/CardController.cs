@@ -13,10 +13,8 @@ public class CardController : MonoBehaviour
     
     public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
-    public static List<CardController> CardInHandList = new List<CardController>();
-    //CardHandTotal is 1 greater than the amount of cards actually in the player's hand
-    public static int CardHandTotal = 1;
-    private int MyCardHandID;
+    
+    private int ThisCardID;
     
 
     // Start is called before the first frame update
@@ -24,7 +22,7 @@ public class CardController : MonoBehaviour
     {
         DrawCard();
         NewTargetPos("Player Hand");
-        Debug.Log("Card position in list on spawn: " + CardInHandList[0]);
+        Debug.Log("Card position in list on spawn: " + CardCreate.CardInHandList[0]);
 
     }
 
@@ -78,9 +76,9 @@ public class CardController : MonoBehaviour
     //called on the card when it is first drawn
     public void DrawCard()
     {
-        CardInHandList.Add(this);
-        CardHandTotal++;
-        MyCardHandID = CardHandTotal;
+        CardCreate.CardInHandList.Add(this);
+        CardCreate.CardHandTotal++;
+        ThisCardID = CardCreate.CardHandTotal;
     }
 
     public void DiscardThisCard()
@@ -88,29 +86,25 @@ public class CardController : MonoBehaviour
         //go to discard pile, gameplay stuff yatta yatta
         NewTargetPos("Discard Pile");
 
+        
         //tell all cards in the player's hand to reset their ID in the hand and if that ID and sets this cards ID to 0
-        for (int CardToCall = 0; CardToCall < (CardHandTotal); CardToCall++)
+        for (int CardToCall = 0; CardToCall < CardCreate.CardHandTotal; CardToCall++)
         {
-            CardInHandList[CardToCall].ResetCardHandID(MyCardHandID);
+            CardCreate.CardInHandList[CardToCall].ResetCardHandID(ThisCardID);
+            
         }
-        CardHandTotal--;
+
+        CardCreate.CardInHandList.RemoveAt(CardCreate.CardHandTotal);
+        CardCreate.CardHandTotal--;
     }
-
-
-    /// <summary>
-    /// - I think ResetCardHandID is not working correctly and is not changing the actuall list at all
-    /// </summary>
 
     public void ResetCardHandID(int DiscardedCardHandID)
     {
         //if this cards ID is less then don't do anything but if it is more then decrement it by 1, if equal then reset it to 0
-        if(DiscardedCardHandID < MyCardHandID)
+        if(DiscardedCardHandID < ThisCardID)
         {
-            MyCardHandID -= 1;
-        }
-        else if(DiscardedCardHandID == MyCardHandID)
-        {
-            MyCardHandID = 0;
+            CardCreate.CardInHandList[ThisCardID - 1] = CardCreate.CardInHandList[ThisCardID];
+            ThisCardID -= 1;
         }
     }
 }
