@@ -14,15 +14,11 @@ public class CardController : MonoBehaviour
     public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
     
-    private int ThisCardID;
-    
-
     // Start is called before the first frame update
     void Start()
     {
         DrawCard();
         NewTargetPos("Player Hand");
-        Debug.Log("Card position in list on spawn: " + CardCreate.CardInHandList[0]);
 
     }
 
@@ -76,9 +72,9 @@ public class CardController : MonoBehaviour
     //called on the card when it is first drawn
     public void DrawCard()
     {
-        CardCreate.CardInHandList.Add(this);
+        CardCreate.CardHandList.Add(this);
         CardCreate.CardHandTotal++;
-        ThisCardID = CardCreate.CardHandTotal;
+        
     }
 
     public void DiscardThisCard()
@@ -86,25 +82,9 @@ public class CardController : MonoBehaviour
         //go to discard pile, gameplay stuff yatta yatta
         NewTargetPos("Discard Pile");
 
-        
-        //tell all cards in the player's hand to reset their ID in the hand and if that ID and sets this cards ID to 0
-        for (int CardToCall = 0; CardToCall < CardCreate.CardHandTotal; CardToCall++)
-        {
-            CardCreate.CardInHandList[CardToCall].ResetCardHandID(ThisCardID);
-            
-        }
-
-        CardCreate.CardInHandList.RemoveAt(CardCreate.CardHandTotal);
+        CardCreate.CardHandList.Remove(this);
         CardCreate.CardHandTotal--;
+
     }
 
-    public void ResetCardHandID(int DiscardedCardHandID)
-    {
-        //if this cards ID is less then don't do anything but if it is more then decrement it by 1, if equal then reset it to 0
-        if(DiscardedCardHandID < ThisCardID)
-        {
-            CardCreate.CardInHandList[ThisCardID - 1] = CardCreate.CardInHandList[ThisCardID];
-            ThisCardID -= 1;
-        }
-    }
 }

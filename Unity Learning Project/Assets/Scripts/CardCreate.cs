@@ -6,7 +6,7 @@ public class CardCreate : MonoBehaviour
 {
     private Vector3 StartPos = new Vector3(1, -3, 0);
     public GameObject CardPrefab;
-    public static List<CardController> CardInHandList = new List<CardController>();
+    public static List<CardController> CardHandList = new List<CardController>();
     public static int CardHandTotal = 0;
 
     // Start is called before the first frame update
@@ -29,21 +29,22 @@ public class CardCreate : MonoBehaviour
     }
 
     //Discards the card with the passed ID in hand
-    public void DiscardCardbyID(int CardHandID)
+    public void DiscardbyPos(int CardListPos)
     {
         //if the card ID passed in exists then it calls it's discard function
-        if(CardHandID <= CardHandTotal && CardHandID > 0)
+        if(CardListPos < CardHandTotal && CardListPos >= 0)
         {
-            CardInHandList[CardHandID].DiscardThisCard();
+            CardHandList[CardListPos].DiscardThisCard();
         }
     }
 
     //discards all the cards in the player's hand
-    public void DiscardAllCards()
+    public void DiscardHand()
     {
-        for(int CardCounter = 1; CardCounter <= CardHandTotal; CardCounter++)
+        int TempCardHandTotal = CardHandTotal;
+        for(int CardListPos = 0; CardListPos < TempCardHandTotal; CardListPos++)
         {
-            DiscardCardbyID(CardCounter);
+            CardHandList[0].DiscardThisCard();
         }
     }
 }
