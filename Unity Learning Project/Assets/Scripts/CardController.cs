@@ -17,8 +17,9 @@ public class CardController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DrawCard();
-        NewTargetPos("Player Hand");
+        
+        New_Target_Pos("Draw Pile");
+
 
     }
 
@@ -40,7 +41,7 @@ public class CardController : MonoBehaviour
     }
 
     //changes the target position of the card this is attached to
-    public void NewTargetPos(string InputTarget)
+    public void New_Target_Pos(string InputTarget)
     {
         //establishes the variables used in Vector3 later
         int NewX = 0;
@@ -52,17 +53,17 @@ public class CardController : MonoBehaviour
         if (InputTarget == "Player Hand")
         {
             NewX = 0;
-            NewY = 0;
+            NewY = -3;
         }
         else if(InputTarget == "Draw Pile")
         {
-            NewX = 1;
-            NewY = 1;
+            NewX = 5;
+            NewY = 0;
         }
         else if(InputTarget == "Discard Pile")
         {
-            NewX = -1;
-            NewY = -1;
+            NewX = -5;
+            NewY = 0;
         }
         
         //tells the card to move to a new position
@@ -70,21 +71,82 @@ public class CardController : MonoBehaviour
     }
 
     //called on the card when it is first drawn
-    public void DrawCard()
+    public void To_Player_Hand()
     {
-        CardCreate.CardHandList.Add(this);
-        CardCreate.CardHandTotal++;
+        //go to player hand, gameplay stuff yatta yatta
+        New_Target_Pos("Draw Pile");
+
+
+
+        //remove from all other lists this object could be in and add it to the correct list
+        if (CardCreate.DrawPileList.Contains(this))
+        {
+            CardCreate.DrawPileList.Remove(this);
+            CardCreate.DrawPileTotal--;
+        }
+        if (CardCreate.DiscardPileList.Contains(this))
+        {
+            CardCreate.DiscardPileList.Remove(this);
+            CardCreate.DiscardPileTotal--;
+        }
+
+        CardCreate.HandList.Add(this);
+        CardCreate.HandTotal++;
+    }
+
+    public void To_Draw_Pile(int ListPos)
+    {
+        //go to draw pile, gameplay stuff yatta yatta
+        New_Target_Pos("Draw Pile");
+
+
+
+        //remove from all other lists this object could be in and add it to the correct list
+        if (CardCreate.HandList.Contains(this))
+        {
+            CardCreate.HandList.Remove(this);
+            CardCreate.HandTotal--;
+        }
+        if (CardCreate.DiscardPileList.Contains(this))
+        {
+            CardCreate.DiscardPileList.Remove(this);
+            CardCreate.DiscardPileTotal--;
+        }
+
+        if(ListPos == -1)
+        {
+            CardCreate.DrawPileList.Add(this);
+            CardCreate.DrawPileTotal++;
+        }
+        else
+        {
+            CardCreate.DrawPileList.Insert(ListPos, this);
+            CardCreate.DrawPileTotal++;
+        }
         
     }
 
-    public void DiscardThisCard()
+    public void To_Discard_Pile()
     {
         //go to discard pile, gameplay stuff yatta yatta
-        NewTargetPos("Discard Pile");
+        New_Target_Pos("Discard Pile");
 
-        CardCreate.CardHandList.Remove(this);
-        CardCreate.CardHandTotal--;
 
+
+        //remove from all other lists this object could be in and add it to the correct list
+        if (CardCreate.DrawPileList.Contains(this))
+        {
+            CardCreate.DrawPileList.Remove(this);
+            CardCreate.DrawPileTotal--;
+        }
+        if (CardCreate.HandList.Contains(this))
+        {
+            CardCreate.HandList.Remove(this);
+            CardCreate.HandTotal--;
+        }
+
+        CardCreate.DiscardPileList.Add(this);
+        CardCreate.DiscardPileTotal++;
     }
 
 }

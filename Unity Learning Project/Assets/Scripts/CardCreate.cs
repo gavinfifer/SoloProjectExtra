@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class CardCreate : MonoBehaviour
 {
-    private Vector3 StartPos = new Vector3(1, -3, 0);
+    private Vector3 StartPos = new Vector3(5, -5, 0);
     public GameObject CardPrefab;
-    public static List<CardController> CardHandList = new List<CardController>();
-    public static int CardHandTotal = 0;
+    public static List<CardController> HandList = new List<CardController>();
+    public static int HandTotal = 0;
+    public static List<CardController> DiscardPileList = new List<CardController>();
+    public static int DiscardPileTotal = 0;
+    public static List<CardController> DrawPileList = new List<CardController>();
+    public static int DrawPileTotal = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,30 +26,40 @@ public class CardCreate : MonoBehaviour
         
     }
 
-    public void DrawCard()
+    public void Create_New_Card_In_Draw_Pile()
     {
         //creates a new card at the start location
         GameObject NewCard = Instantiate(CardPrefab) as GameObject;
         NewCard.transform.position = StartPos;
     }
 
+    public void Draw_Top_Card_Of_Draw_Pile()
+    {
+        DrawPileList[0].To_Player_Hand();
+    }
+
+    public void Place_Card_On_Top_Draw_Pile(int ListPos, int DrawPileListPos)
+    {
+        
+    }
+
     //Discards the card with the passed ID in hand
-    public void DiscardbyPos(int CardListPos)
+    public void Discard_By_Pos(int ListPos)
     {
         //if the card ID passed in exists then it calls it's discard function
-        if(CardListPos < CardHandTotal && CardListPos >= 0)
+        if(ListPos < HandTotal && ListPos >= 0)
         {
-            CardHandList[CardListPos].DiscardThisCard();
+            HandList[ListPos].To_Discard_Pile();
         }
     }
 
     //discards all the cards in the player's hand
-    public void DiscardHand()
+    public void Discard_Hand()
     {
-        int TempCardHandTotal = CardHandTotal;
-        for(int CardListPos = 0; CardListPos < TempCardHandTotal; CardListPos++)
+        int HandTotalAtCall = HandTotal;
+        for(int ListPos = 0; ListPos < HandTotalAtCall; ListPos++)
         {
-            CardHandList[0].DiscardThisCard();
+            HandList[0].To_Discard_Pile();
         }
     }
 }
