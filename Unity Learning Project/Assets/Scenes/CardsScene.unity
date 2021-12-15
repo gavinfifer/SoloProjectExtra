@@ -525,7 +525,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 503731883}
         m_TargetAssemblyTypeName: CardCreate, Assembly-CSharp
-        m_MethodName: DiscardbyPos
+        m_MethodName: Discard_By_Pos
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -659,7 +659,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 570224306}
         m_TargetAssemblyTypeName: CardCreate, Assembly-CSharp
-        m_MethodName: DrawCard
+        m_MethodName: Draw_Top_Card_Of_Draw_Pile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1182,12 +1182,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1205159000}
         m_TargetAssemblyTypeName: CardCreate, Assembly-CSharp
-        m_MethodName: Create_New_Card_In_Draw_Pile
-        m_Mode: 1
+        m_MethodName: Create_Card_Deck
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1487,7 +1487,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1931261301}
         m_TargetAssemblyTypeName: CardCreate, Assembly-CSharp
-        m_MethodName: DiscardHand
+        m_MethodName: Discard_Hand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

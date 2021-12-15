@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardCreate : MonoBehaviour
 {
-    private Vector3 StartPos = new Vector3(5, -5, 0);
+    private Vector3 StartPos = new Vector3(10, -1, 0);
     public GameObject CardPrefab;
     public static List<CardController> HandList = new List<CardController>();
     public static int HandTotal = 0;
@@ -32,10 +32,24 @@ public class CardCreate : MonoBehaviour
         GameObject NewCard = Instantiate(CardPrefab) as GameObject;
         NewCard.transform.position = StartPos;
     }
+    public void Create_Card_Deck(int DeckSize)
+    {
+        for(int CardCount = 0; CardCount < DeckSize; CardCount++)
+        {
+            Create_New_Card_In_Draw_Pile();
+        }
+    }
 
     public void Draw_Top_Card_Of_Draw_Pile()
     {
-        DrawPileList[0].To_Player_Hand();
+        if(DrawPileList.Count != 0)
+        {
+            DrawPileList[0].To_Player_Hand();
+        }
+        else
+        {
+            Debug.Log("!---Draw Pile Empty---!");
+        }
     }
 
     public void Place_Card_On_Top_Draw_Pile(int ListPos, int DrawPileListPos)
@@ -61,6 +75,11 @@ public class CardCreate : MonoBehaviour
         {
             HandList[0].To_Discard_Pile();
         }
+    }
+
+    public void Delete_All_Card_Objects()
+    {
+        ////////////////////////////////////////////USe the delete object cod in the card controller cs file on every existing Card Object
     }
 }
 
