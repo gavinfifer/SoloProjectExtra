@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Current Issues: 
-/// -I am incorrectly accessing the CardInHandList as it starts at 0 not 1. The code doesn't show an error about this but it is the cause of the discard issues.
-/// -The DiscardThisCard code is also trying to discard cards that don't exist
-/// </summary>
+
 
 public class CardController : MonoBehaviour
 {
@@ -138,9 +134,8 @@ public class CardController : MonoBehaviour
         CardCreate.DiscardPileList.Add(this);
         CardCreate.DiscardPileTotal++;
     }
-    public void Delete_This_Object()
+    public void OnDestroy()
     {
         Remove_This_From_Every_List_TO(new List<CardController>());
-        Destroy(this);
     }
 }

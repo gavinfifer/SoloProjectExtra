@@ -79,7 +79,12 @@ public class CardCreate : MonoBehaviour
 
     public void Delete_All_Card_Objects()
     {
-        ////////////////////////////////////////////USe the delete object cod in the card controller cs file on every existing Card Object
+        CardController[] allObjects = FindObjectsOfType<CardController>();
+        foreach (CardController CardObject in allObjects)
+        {
+            Destroy(CardObject.gameObject);
+        }
     }
+
 }
 
