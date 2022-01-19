@@ -9,6 +9,7 @@ public class CardController : MonoBehaviour
     
     public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
+    string StringTarget = "";
     
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,9 @@ public class CardController : MonoBehaviour
 
             transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPos, Time.deltaTime * CurrentVelocity);
         }
+
+        New_Target_Pos(StringTarget);
+
     }
 
     //changes the target position of the card this is attached to
@@ -43,22 +47,42 @@ public class CardController : MonoBehaviour
 
         if (InputTarget == "Player Hand")
         {
-            NewX = 0;
+
+            //create each position for the cards to go to based off of the amount of cards in hand
+            //pass through the array of cards in the hand from first to last and send them to a position from left to right
+
+            //create spacing for cards based on dividing the max space for the hand
+            //check the position within the array in hand for this
+            //set the NewX based off of that position found in relation to the total
+            int IndexOfThis = CardCreate.HandList.IndexOf(this);
+            
+            NewX = (IndexOfThis + 1 / CardCreate.HandTotal + 1);
+            
+
             NewY = -3;
+
+            TargetPos = new Vector3(NewX, NewY, NewZ);
+            
+
+
+
+
         }
         else if(InputTarget == "Draw Pile")
         {
             NewX = 5;
             NewY = 0;
+            TargetPos = new Vector3(NewX, NewY, NewZ);
         }
         else if(InputTarget == "Discard Pile")
         {
             NewX = -5;
             NewY = 0;
+            TargetPos = new Vector3(NewX, NewY, NewZ);
         }
         
         //tells the card to move to a new position
-        TargetPos = new Vector3(NewX, NewY, NewZ);
+        
     }
 
     public void Remove_This_From_Every_List_TO(List <CardController> TargetList)
@@ -86,7 +110,7 @@ public class CardController : MonoBehaviour
     public void To_Player_Hand()
     {
         //go to player hand, gameplay stuff yatta yatta
-        New_Target_Pos("Player Hand");
+        StringTarget = "Player Hand";
 
 
 
@@ -99,7 +123,7 @@ public class CardController : MonoBehaviour
     public void To_Draw_Pile_At_Pos(int ListPos)
     {
         //go to draw pile, gameplay stuff yatta yatta
-        New_Target_Pos("Draw Pile");
+        StringTarget = "Draw Pile";
 
 
         
@@ -120,7 +144,7 @@ public class CardController : MonoBehaviour
     public void To_Discard_Pile()
     {
         //go to discard pile, gameplay stuff yatta yatta
-        New_Target_Pos("Discard Pile");
+        StringTarget = "Discard Pile";
 
 
 

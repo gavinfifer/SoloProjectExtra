@@ -25,7 +25,7 @@ public class CardCreate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Create_New_Card_In_Draw_Pile()
