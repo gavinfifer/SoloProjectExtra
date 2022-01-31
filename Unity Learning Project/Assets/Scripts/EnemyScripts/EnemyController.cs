@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
 
     //Enemy Stats
     public float HealthPoints = 50.0f;
+    public List<string> StatusList = new List<string>();
+
 
     // Start is called before the first frame update
     void Start()

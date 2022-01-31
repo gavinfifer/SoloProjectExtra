@@ -41,9 +41,9 @@ public class CardController : MonoBehaviour
     public void New_Target_Pos(string InputTarget)
     {
         //establishes the variables used in Vector3 later
-        int NewX = 0;
-        int NewY = 0;
-        int NewZ = 0;
+        float NewX = 0;
+        float NewY = 0;
+        float NewZ = 0;
 
         if (InputTarget == "Player Hand")
         {
@@ -51,21 +51,16 @@ public class CardController : MonoBehaviour
             //create each position for the cards to go to based off of the amount of cards in hand
             //pass through the array of cards in the hand from first to last and send them to a position from left to right
 
-            //create spacing for cards based on dividing the max space for the hand
-            //check the position within the array in hand for this
-            //set the NewX based off of that position found in relation to the total
             int IndexOfThis = CardCreate.HandList.IndexOf(this);
-            
-            NewX = (IndexOfThis + 1 / CardCreate.HandTotal + 1);
-            
+            float CenterValue = ((1.0f * CardCreate.HandTotal) / 2.0f);
+
+            NewX = -(CenterValue - IndexOfThis) + 0.5f;
+
+
 
             NewY = -3;
 
             TargetPos = new Vector3(NewX, NewY, NewZ);
-            
-
-
-
 
         }
         else if(InputTarget == "Draw Pile")
@@ -156,5 +151,10 @@ public class CardController : MonoBehaviour
     public void OnDestroy()
     {
         Remove_This_From_Every_List_TO(new List<CardController>());
+    }
+
+    private void OnMouseDown()
+    {
+        
     }
 }

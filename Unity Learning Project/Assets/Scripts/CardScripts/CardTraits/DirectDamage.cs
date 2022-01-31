@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DirectDamage : MonoBehaviour
 {
+    public int DamageValue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,11 @@ public class DirectDamage : MonoBehaviour
         
     }
 
-    public int DamageValue;
+    //When deals damage to the object passed in
+    public void ThisCardPlayed(GameObject TargetObject)
+    {
+        //deal damage to the TargetObject
+        TargetObject.GetComponent<EnemyController>().HealthPoints -= DamageValue;
+    }
 
 }
