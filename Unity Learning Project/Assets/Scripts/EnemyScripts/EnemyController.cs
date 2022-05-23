@@ -6,9 +6,12 @@ public class EnemyController : MonoBehaviour
 {
     public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
+    public Renderer renderer_;
 
     //Enemy Stats
     public float HealthPoints = 50.0f;
+    //No Status effect
+    public int CurrentStatus = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +22,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //is constantly moving this card toward the new position every frame
+        //is constantly moving this enemy toward the new position every frame
         Vector3 CurrentTargetPos = TargetPos;
 
         if (transform.position != CurrentTargetPos)
@@ -32,16 +35,21 @@ public class EnemyController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPos, Time.deltaTime * CurrentVelocity);
         }
 
-        //---------------------------Testing User Input: REMOVE THIS SECTION LATER------------------------------------
-        if (Input.GetKey("w"))
+        if(HealthPoints <= 0.0f)
         {
-            New_Target_Pos("Up");
+            Destroy(gameObject);
+        }
+
+        if(CurrentStatus > 0)
+        {
+            //change circle color
+            renderer_.material.color = new Color(1, 0, 0);
         }
         else
         {
-            New_Target_Pos("Middle Screen");
+            //reset circle color
+            renderer_.material.color = new Color(1, 1, 1);
         }
-        //------------------------------------------------------------------------------------------------------------
     }
 
     public void New_Target_Pos(string InputTarget)
@@ -62,9 +70,8 @@ public class EnemyController : MonoBehaviour
             NewY = 7;
         }
 
-        //tells the card to move to a new position
+        //tells the enemy to move to a new position
         TargetPos = new Vector3(NewX, NewY, NewZ);
     }
 
-    
 }

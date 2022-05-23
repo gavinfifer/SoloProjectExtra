@@ -9,7 +9,10 @@ public class CardController : MonoBehaviour
     
     public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
-    
+
+    public float damage = 0.0f;
+    public int status = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,8 +91,6 @@ public class CardController : MonoBehaviour
         //go to player hand, gameplay stuff yatta yatta
         New_Target_Pos("Player Hand");
 
-
-
         //remove from all other lists this object could be in and add it to the correct list
         Remove_This_From_Every_List_TO(CardCreate.HandList);
         CardCreate.HandList.Add(this);
@@ -100,8 +101,6 @@ public class CardController : MonoBehaviour
     {
         //go to draw pile, gameplay stuff yatta yatta
         New_Target_Pos("Draw Pile");
-
-
         
         //remove from all other lists this object could be in and add it to the correct list
         Remove_This_From_Every_List_TO(CardCreate.DrawPileList);
@@ -129,6 +128,36 @@ public class CardController : MonoBehaviour
         CardCreate.DiscardPileList.Add(this);
         CardCreate.DiscardPileTotal++;
     }
+
+    public void OnMouseDown()
+    {
+        //if in player hand
+        if(TargetPos == new Vector3(0, -3, 0))
+        {
+            //play this card on the next Enemy without a status
+            GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if(Enemies != null)
+            {
+                bool done = false;
+                foreach (GameObject Enemy in Enemies)
+                {
+                    if (done == false && Enemy.GetComponent<EnemyController>().CurrentStatus != 1)
+                    {
+                        //card's effects
+                        Enemy.GetComponent<EnemyController>().HealthPoints -= damage;
+                        Enemy.GetComponent<EnemyController>().CurrentStatus = status;
+
+                        done = true;
+                    }
+                    
+                }
+
+                To_Discard_Pile();
+            }
+        }
+    }
+
     public void OnDestroy()
     {
         Remove_This_From_Every_List_TO(new List<CardController>());
