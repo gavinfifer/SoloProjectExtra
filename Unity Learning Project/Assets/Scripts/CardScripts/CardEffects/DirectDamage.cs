@@ -18,6 +18,7 @@ public class DirectDamage : MonoBehaviour
         
     }
 
+<<<<<<< Updated upstream:Unity Learning Project/Assets/Scripts/CardScripts/CardTraits/DirectDamage.cs
     //When deals damage to the object passed in
     public void ThisCardPlayed(GameObject TargetObject)
     {
@@ -25,4 +26,6 @@ public class DirectDamage : MonoBehaviour
         TargetObject.GetComponent<EnemyController>().HealthPoints -= DamageValue;
     }
 
+=======
+>>>>>>> Stashed changes:Unity Learning Project/Assets/Scripts/CardScripts/CardEffects/DirectDamage.cs
 }

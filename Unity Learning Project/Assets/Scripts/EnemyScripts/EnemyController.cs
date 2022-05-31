@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
     //No Status effect
     public int CurrentStatus = 0;
 
+    private bool BoardShift = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,14 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BoardShift == true)
+        {
+            float thisIndex = System.Array.IndexOf(GameObject.FindGameObjectsWithTag("Enemy"), gameObject);
+            float NewX = (thisIndex) - ((GameObject.FindGameObjectsWithTag("Enemy").Length - 1) * 0.5f);
+            TargetPos = new Vector3(NewX, 0, 0);
+            
+        }
+
         //is constantly moving this enemy toward the new position every frame
         Vector3 CurrentTargetPos = TargetPos;
 
@@ -63,11 +73,13 @@ public class EnemyController : MonoBehaviour
         {
             NewX = 0;
             NewY = 0;
+            BoardShift = true;
         }
         else if (InputTarget == "Up")
         {
             NewX = 1;
             NewY = 7;
+            BoardShift = false;
         }
 
         //tells the enemy to move to a new position

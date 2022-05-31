@@ -9,6 +9,7 @@ public class CardController : MonoBehaviour
     
     public float MinimumMoveSpeed = 0.1f;
     Vector3 TargetPos;
+    private bool HandShift = false;
 
     public float damage = 0.0f;
     public int status = 0;
@@ -22,6 +23,27 @@ public class CardController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //array of components on this gameObject
+        Component[] AttachedComponents = gameObject.GetComponents(typeof(Component));
+        for(int index = 0; index < AttachedComponents.Length; index++)
+        {
+            //Check for a triggers activation
+
+                //Then call activated trigger's effect
+
+        }
+
+
+
+
+        //dynamic position shifting of cards in hand
+        if (HandShift == true)
+        {
+            float thisIndex = CardCreate.HandList.IndexOf(this);
+            float NewX = (thisIndex) - ((CardCreate.HandTotal - 1) * 0.5f);
+            TargetPos = new Vector3(NewX, -3, 0);
+        }
+
         //is constantly moving this card toward the new position every frame
         Vector3 CurrentTargetPos = TargetPos;
 
@@ -30,7 +52,7 @@ public class CardController : MonoBehaviour
             float CurrentVelocity = MinimumMoveSpeed;
 
             //scale the CurrentVelocity based on the distance to the target position
-            CurrentVelocity +=  (5 * (Vector3.Distance(CurrentTargetPos, transform.position)));
+            CurrentVelocity += (5 * (Vector3.Distance(CurrentTargetPos, transform.position)));
 
             transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPos, Time.deltaTime * CurrentVelocity);
         }
@@ -48,16 +70,19 @@ public class CardController : MonoBehaviour
         {
             NewX = 0;
             NewY = -3;
+            HandShift = true;
         }
         else if(InputTarget == "Draw Pile")
         {
             NewX = 5;
             NewY = 0;
+            HandShift = false;
         }
         else if(InputTarget == "Discard Pile")
         {
             NewX = -5;
             NewY = 0;
+            HandShift = false;
         }
         
         //tells the card to move to a new position
@@ -132,28 +157,26 @@ public class CardController : MonoBehaviour
     public void OnMouseDown()
     {
         //if in player hand
-        if(TargetPos == new Vector3(0, -3, 0))
+        if(CardCreate.HandList.Contains(this))
         {
-            //play this card on the next Enemy without a status
             GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            if(Enemies != null)
+            if (Enemies != null)
             {
                 bool done = false;
                 foreach (GameObject Enemy in Enemies)
                 {
+                    //play this card on the next Enemy without a status
                     if (done == false && Enemy.GetComponent<EnemyController>().CurrentStatus != 1)
                     {
-                        //card's effects
+                        //card's effects (maybe make this into a new script entirely)
                         Enemy.GetComponent<EnemyController>().HealthPoints -= damage;
                         Enemy.GetComponent<EnemyController>().CurrentStatus = status;
 
                         done = true;
+                        To_Discard_Pile();
                     }
-                    
-                }
-
-                To_Discard_Pile();
+                } 
             }
         }
     }
