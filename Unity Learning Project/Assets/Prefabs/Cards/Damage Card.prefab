@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6649139675520395747, guid: 07eafaef0257fed469171d9b3f6f3961, type: 3}
       propertyPath: m_Name
-      value: Card
+      value: Damage Card
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07eafaef0257fed469171d9b3f6f3961, type: 3}

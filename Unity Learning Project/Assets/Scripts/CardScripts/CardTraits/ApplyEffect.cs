@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectDamage : MonoBehaviour
+public class ApplyEffect : MonoBehaviour
 {
-    public int DamageValue;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +21,7 @@ public class DirectDamage : MonoBehaviour
     //When deals damage to the object passed in
     public void ThisCardPlayed(GameObject TargetObject)
     {
-        //deal damage to the TargetObject
-        TargetObject.GetComponent<EnemyController>().HealthPoints -= DamageValue;
-    }
+        //apply status effect to the target object
 
+    }
 }
