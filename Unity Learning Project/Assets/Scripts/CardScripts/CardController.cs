@@ -28,13 +28,10 @@ public class CardController : MonoBehaviour
         for(int index = 0; index < AttachedComponents.Length; index++)
         {
             //Check for a triggers activation
-
-                //Then call activated trigger's effect
+            
+            //Then call activated trigger's effect
 
         }
-
-
-
 
         //dynamic position shifting of cards in hand
         if (HandShift == true)
